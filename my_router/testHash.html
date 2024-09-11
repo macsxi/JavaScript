@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端路由测试</title>
+</head>
+
+<body>
+  <div>
+    <div id="nav">
+      <a href="#/page1">page1</a>
+      <a href="#/page2">page2</a>
+      <a href="#/page3">page3</a>
+      <a href="#/page4">page4</a>
+      <a href="#/page5">page5</a>
+    </div>
+    <div id="container"></div>
+  </div>
+  <script src="./HashRouter.js"></script>
+  <script>
+    let router = new HashRouter();
+    const container = document.querySelector('#container');
+    // 注册首页
+    router.registerIndex(function () { container.innerHTML = '我是首页' });
+    router.register('/page1', function () { container.innerHTML = '我是page1' });
+    router.register('/page2', function () { container.innerHTML = '我是page2' });
+    router.register('/page3', function () { container.innerHTML = '我是page3' });
+    router.register('/page4', function () { throw new Error("抛出一个异常"); });
+    // 加载视图
+    router.load();
+    router.registerNotFound(function () { container.innerHTML = '页面未找到' });
+    router.registerError(function (error) { container.innerHTML = '页面异常，错误消息：</br>' + error.message });
+  </script>
+</body>
+
+</html>
